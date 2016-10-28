@@ -1,4 +1,3 @@
-
 import java.util.Scanner;
 
 public class BattleProgram
@@ -7,14 +6,15 @@ public class BattleProgram
     private static Scanner scanner = new Scanner( System.in );
 
     // Character stats
-    private static int playerHp, playerAtk, playerDef;
-    private static int enemyHp, enemyAtk, enemyDef;
+    static int playerHp, playerAtk, playerDef;
+    static int enemyHp, enemyAtk, enemyDef;
+    static int round;
 
     public static void main( String args[] )
     {
         playerHp = 100;
         enemyHp = 100;
-
+        round = 0;
         chooseClass();
         battle();
     }
@@ -67,10 +67,21 @@ public class BattleProgram
     /**************************************** YOU WILL UPDATE THIS */
     public static void battle()
     {
-        
+        do
+        {
+            round++;
+            int playerDamage = getRandomNumber(0,enemyAtk - (playerDef/2));
+            int enemyDamage = getRandomNumber(0,playerAtk - (enemyDef/2));
+            System.out.println("-----------------\nROUND: "+round);
+            System.out.println("PLAYER HP: "+playerHp+"\tENEMY HP: "+enemyHp+"\n");
+            playerHp-=playerDamage;
+            enemyHp-=enemyDamage;
+            System.out.println("Player took "+playerDamage+" damage from enemy. New HP: "+playerHp);
+            System.out.println("Enemy took "+enemyDamage+" damage from player. New HP: "+enemyHp);
+        } while (playerHp > 0 && enemyHp > 0);
     }
 
-
+    
     public static int getRandomNumber( int min, int max )
     {
         return min + (int)(Math.random() * max);
